@@ -17,9 +17,10 @@ for q in queries:
 
 print("Caches in all PQs:",len(gcs5)+len(gcs4))
 
+gcs5 = list(set(gcs5))
+gcs4 = list(set(gcs4))
 for gcs in [gcs5, gcs4]:
     to_be_removed = []
-    gcs = list(set(gcs))
     for gc in gcs:
         if any(gc.count(c)-1 for c in gc):
             to_be_removed.append(gc)
@@ -58,4 +59,5 @@ for i1 in range(l5):
                             s=s.replace(gcs4[i4],"")
                     s=s.replace(gcs5[i3],"")
             s=s.replace(gcs5[i2],"")
-    print(i1)
+    if i1%10==9:
+        print(str(i1+1)+"/"+str(l5))
