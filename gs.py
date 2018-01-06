@@ -1,5 +1,5 @@
 import xml.etree.ElementTree as et
-queries = ['geocaching.loc', 'q1.loc']
+queries = ['geocaching.loc']
 gcs5 = []
 gcs4 = []
 
@@ -41,11 +41,11 @@ for i1 in range(l4):
             for i3 in range(i2,l4):
                 if all(c not in s for c in gcs4[i3]):
                     s+=gcs4[i3]
-                    for i4 in range(l4):
+                    for i4 in range(i3,l4):
                         if all(c not in s for c in gcs4[i4]):
                             s+=gcs4[i4]
                             ### 5 digit codes from here on
-                            for i5 in range(i4,l5):
+                            for i5 in range(l5):
                                 if all(c not in s for c in gcs5[i5]):
                                     s+=gcs5[i5]
                                     for i6 in range(i5,l5):
@@ -55,7 +55,7 @@ for i1 in range(l4):
                                                 if all(c not in s for c in gcs5[i7]):
                                                     s+=gcs5[i7]
                                                     combinations.append([gcs4[i1], gcs4[i2], gcs4[i3], gcs4[i4], gcs5[i5], gcs5[i6], gcs5[i7]])
-                                                    s.replace(gcs5[i7],"")
+                                                    s=s.replace(gcs5[i7],"")
                                             s=s.replace(gcs5[i6],"")
                                     s=s.replace(gcs5[i5],"")
                             s=s.replace(gcs4[i4],"")
