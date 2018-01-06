@@ -1,5 +1,5 @@
 import xml.etree.ElementTree as et
-queries = ['geocaching.loc']
+queries = ['geocaching.loc', 'q1.loc']
 gcs5 = []
 gcs4 = []
 
@@ -31,33 +31,38 @@ l5=len(gcs5)
 l4=len(gcs4)
 print("Caches without double characters:",l5+l4)
 
-for i1 in range(l5):
-    s=gcs5[i1]
-    for i2 in range(i1,l5):
-        if all(c not in s for c in gcs5[i2]):
-            s+=gcs5[i2]
-            for i3 in range(i2,l5):
-                if all(c not in s for c in gcs5[i3]):
-                    s+=gcs5[i3]
-                    ### 4 digit codes from here on
+combinations = []
+
+for i1 in range(l4):
+    s=gcs4[i1]
+    for i2 in range(i1,l4):
+        if all(c not in s for c in gcs4[i2]):
+            s+=gcs4[i2]
+            for i3 in range(i2,l4):
+                if all(c not in s for c in gcs4[i3]):
+                    s+=gcs4[i3]
                     for i4 in range(l4):
                         if all(c not in s for c in gcs4[i4]):
                             s+=gcs4[i4]
-                            for i5 in range(i4,l4):
-                                if all(c not in s for c in gcs4[i5]):
-                                    s+=gcs4[i5]
-                                    for i6 in range(i5,l4):
-                                        if all(c not in s for c in gcs4[i6]):
-                                            s+=gcs4[i6]
-                                            for i7 in range(i6,l4):
-                                                if all(c not in s for c in gcs4[i7]):
-                                                    s+=gcs4[i7]
-                                                    print(gcs5[i1], gcs5[i2], gcs5[i3], gcs4[i4], gcs4[i5], gcs4[i6], gcs4[i7])
-                                                    s.replace(gcs4[i7],"")
-                                            s=s.replace(gcs4[i6],"")
-                                    s=s.replace(gcs4[i5],"")
+                            ### 5 digit codes from here on
+                            for i5 in range(i4,l5):
+                                if all(c not in s for c in gcs5[i5]):
+                                    s+=gcs5[i5]
+                                    for i6 in range(i5,l5):
+                                        if all(c not in s for c in gcs5[i6]):
+                                            s+=gcs5[i6]
+                                            for i7 in range(i6,l5):
+                                                if all(c not in s for c in gcs5[i7]):
+                                                    s+=gcs5[i7]
+                                                    combinations.append([gcs4[i1], gcs4[i2], gcs4[i3], gcs4[i4], gcs5[i5], gcs5[i6], gcs5[i7]])
+                                                    s.replace(gcs5[i7],"")
+                                            s=s.replace(gcs5[i6],"")
+                                    s=s.replace(gcs5[i5],"")
                             s=s.replace(gcs4[i4],"")
-                    s=s.replace(gcs5[i3],"")
-            s=s.replace(gcs5[i2],"")
-    if i1%10==9:
-        print(str(i1+1)+"/"+str(l5))
+                    s=s.replace(gcs4[i3],"")
+            s=s.replace(gcs4[i2],"")
+    print(str(int((i1+1)/l4*100))+"%")
+
+print(len(combinations), "combinations found.")
+for c in combinations:
+    print(c)
