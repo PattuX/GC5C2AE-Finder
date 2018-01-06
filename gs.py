@@ -1,53 +1,61 @@
 import xml.etree.ElementTree as et
 queries = ['geocaching.loc']
-gcs = []
+gcs5 = []
+gcs4 = []
 
 for q in queries:
     t = et.parse(q)
     root = t.getroot()
     for child in root.iter("name"):
-        gcs.append(child.attrib["id"][2:])
+        code=child.attrib["id"][2:]
+        if len(code)==5:
+            gcs5.append(code)
+        elif len(code)==4:
+            gcs4.append(code)
+        else:
+            print(dropped(code))
 
-print("Caches in all PQs:",len(gcs))
-gcs = list(set(gcs))
-print("Non-duplicate caches:",len(gcs))
-to_be_removed = []
+print("Caches in all PQs:",len(gcs5)+len(gcs4))
 
-for gc in gcs:
-    if any(gc.count(c)-1 for c in gc):
-        to_be_removed.append(gc)
-for gc in to_be_removed:
-    gcs.remove(gc)
+for gcs in [gcs5, gcs4]:
+    to_be_removed = []
+    gcs = list(set(gcs))
+    for gc in gcs:
+        if any(gc.count(c)-1 for c in gc):
+            to_be_removed.append(gc)
+    for gc in to_be_removed:
+        gcs.remove(gc)
 
-l=len(gcs)
-print("Caches without double characters:",l)
+l5=len(gcs5)
+l4=len(gcs4)
+print("Caches without double characters:",l5+l4)
 
-for i1 in range(l):
-    s=gcs[i1]
-    for i2 in range(i1,l):
-        if all(c not in s for c in gcs[i2]):
-            s+=gcs[i2]
-            for i3 in range(i2,l):
-                if all(c not in s for c in gcs[i3]):
-                    s+=gcs[i3]
-                    for i4 in range(i3,l):
-                        if 16<=len(s+gcs[i6])<=19 and all(c not in s for c in gcs[i4]):
-                            s+=gcs[i4]
-                            for i5 in range(i4,l):
-                                if 21<=len(s+gcs[i6])<=23 and all(c not in s for c in gcs[i5]):
-                                    s+=gcs[i5]
-                                    for i6 in range(i5,l):
-                                        if 26<=len(s+gcs[i6])<=27 and all(c not in s for c in gcs[i6]):
-                                            s+=gcs[i6]
-                                            for i7 in range(i6,l):
-                                                if all(c not in s for c in gcs[i7]):
-                                                    s+=gcs[i7]
-                                                    if len(s)==31:
-                                                        print(gcs[i1], gcs[i2], gcs[i3], gcs[i4], gcs[i5], gcs[i6], gcs[i7], i1,i2,i3,i4,i5,i6,i7)
-                                                    s.replace(gcs[i7],"")
-                                            s=s.replace(gcs[i6],"")
-                                    s=s.replace(gcs[i5],"")
-                            s=s.replace(gcs[i4],"")
-                    s=s.replace(gcs[i3],"")
-            s=s.replace(gcs[i2],"")
+for i1 in range(l5):
+    s=gcs5[i1]
+    for i2 in range(i1,l5):
+        if all(c not in s for c in gcs5[i2]):
+            s+=gcs5[i2]
+            for i3 in range(i2,l5):
+                if all(c not in s for c in gcs5[i3]):
+                    s+=gcs5[i3]
+                    ### 4 digit codes from here on
+                    for i4 in range(l4):
+                        if all(c not in s for c in gcs4[i4]):
+                            s+=gcs4[i4]
+                            for i5 in range(i4,l4):
+                                if all(c not in s for c in gcs4[i5]):
+                                    s+=gcs4[i5]
+                                    for i6 in range(i5,l4):
+                                        if all(c not in s for c in gcs4[i6]):
+                                            s+=gcs4[i6]
+                                            for i7 in range(i6,l4):
+                                                if all(c not in s for c in gcs4[i7]):
+                                                    s+=gcs4[i7]
+                                                    print(gcs5[i1], gcs5[i2], gcs5[i3], gcs4[i4], gcs4[i5], gcs4[i6], gcs4[i7])
+                                                    s.replace(gcs4[i7],"")
+                                            s=s.replace(gcs4[i6],"")
+                                    s=s.replace(gcs4[i5],"")
+                            s=s.replace(gcs4[i4],"")
+                    s=s.replace(gcs5[i3],"")
+            s=s.replace(gcs5[i2],"")
     print(i1)
