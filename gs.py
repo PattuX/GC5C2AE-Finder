@@ -42,9 +42,8 @@ for i1 in range(l):
                                             for i7 in range(i6,l):
                                                 if all(c not in s for c in gcs[i7]):
                                                     s+=gcs[i7]
-                                                    print(gcs[i1], gcs[i2], gcs[i3], gcs[i4], gcs[i5], gcs[i6], gcs[i7])
                                                     if len(s)==31:
-                                                        print("yay",gcs[i1], gcs[i2], gcs[i3], gcs[i4], gcs[i5], gcs[i6], gcs[i7], i1,i2,i3,i4,i5,i6,i7)
+                                                        print(gcs[i1], gcs[i2], gcs[i3], gcs[i4], gcs[i5], gcs[i6], gcs[i7], i1,i2,i3,i4,i5,i6,i7)
                                                     s.replace(gcs[i7],"")
                                             s=s.replace(gcs[i6],"")
                                     s=s.replace(gcs[i5],"")
