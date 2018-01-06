@@ -31,13 +31,13 @@ for i1 in range(l):
                 if all(c not in s for c in gcs[i3]):
                     s+=gcs[i3]
                     for i4 in range(i3,l):
-                        if all(c not in s for c in gcs[i4]):
+                        if 16<=len(s+gcs[i6])<=19 and all(c not in s for c in gcs[i4]):
                             s+=gcs[i4]
                             for i5 in range(i4,l):
-                                if all(c not in s for c in gcs[i5]):
+                                if 21<=len(s+gcs[i6])<=23 and all(c not in s for c in gcs[i5]):
                                     s+=gcs[i5]
                                     for i6 in range(i5,l):
-                                        if all(c not in s for c in gcs[i6]):
+                                        if 26<=len(s+gcs[i6])<=27 and all(c not in s for c in gcs[i6]):
                                             s+=gcs[i6]
                                             for i7 in range(i6,l):
                                                 if all(c not in s for c in gcs[i7]):
