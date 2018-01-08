@@ -1,4 +1,5 @@
 import xml.etree.ElementTree as et
+import copy
 queries = ['geocaching.loc']
 gcs5 = []
 gcs4 = []
@@ -61,8 +62,14 @@ for i1 in range(l4):
                             s=s.replace(gcs4[i4],"")
                     s=s.replace(gcs4[i3],"")
             s=s.replace(gcs4[i2],"")
-    print(str(int((i1+1)/l4*100))+"%")
+    print("Progress: "+str(int((i1+1)/l4*100))+"%", end="\r")
 
-print(len(combinations), "combinations found.")
-for c in combinations:
-    print(c)
+print(len(combinations), "combinations found")
+
+for i,c in enumerate(combinations):
+    tree = copy.deepcopy(t)
+    root = tree.getroot()
+    for wp in root.findall("waypoint"):
+        if wp.find("name").get("id") not in ["GC"+x for x in c]:
+            root.remove(wp)
+    tree.write("Schmiederoute"+str(i+1)+".loc")
