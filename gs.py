@@ -7,14 +7,28 @@ gcs4 = []
 for q in queries:
     t = et.parse(q)
     root = t.getroot()
-    for child in root.iter("name"):
-        code=child.attrib["id"][2:]
+    
+    if q[-4:]==".loc":
+        filt = "name"
+    elif q[-4:]==".gpx":
+        #3hacky5me
+        xsi = root.tag[:-3]
+        filt = xsi+"name"
+    else:
+        print("Dropped "+q+". Please give a .gpx or .loc file.")
+            
+    for child in root.iter(filt):
+        if q[-4:]==".loc":
+            code=child.get("id")[2:]
+        elif q[-4:]==".gpx":
+            code=child.text[2:] if child.text[:2]=="GC" else ""
         if len(code)==5:
             gcs5.append(code)
         elif len(code)==4:
             gcs4.append(code)
-        else:
-            print(dropped(code))
+        elif code != "":
+            print("Dropped "+code+". Either your code is invalid or it is a very old cache (Code length 3 or less) which this script does not consider.")
+
 
 print("Caches in all PQs:",len(gcs5)+len(gcs4))
 
