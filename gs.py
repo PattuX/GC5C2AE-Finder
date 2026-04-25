@@ -91,50 +91,55 @@ def run(queries, write_routes=True, output_dir='.'):
     l4 = len(gcs4)
     print('Caches without double characters:', l5 + l4, file=output)
 
+    if l4 == 0:
+        print('Progress: 100%', file=output)
+        print('0 combinations found', file=output)
+        return output.getvalue(), []
+
     combinations = []
-    if l4 > 0:
-        for i1 in range(l4):
-            s = gcs4[i1]
-            for i2 in range(i1, l4):
-                if all(c not in s for c in gcs4[i2]):
-                    s += gcs4[i2]
-                    for i3 in range(i2, l4):
-                        if all(c not in s for c in gcs4[i3]):
-                            s += gcs4[i3]
-                            for i4 in range(i3, l4):
-                                if all(c not in s for c in gcs4[i4]):
-                                    s += gcs4[i4]
-                                    for i5 in range(l5):
-                                        if all(c not in s for c in gcs5[i5]):
-                                            s += gcs5[i5]
-                                            for i6 in range(i5, l5):
-                                                if all(c not in s for c in gcs5[i6]):
-                                                    s += gcs5[i6]
-                                                    for i7 in range(i6, l5):
-                                                        if all(c not in s for c in gcs5[i7]):
-                                                            s += gcs5[i7]
-                                                            combinations.append([
-                                                                gcs4[i1],
-                                                                gcs4[i2],
-                                                                gcs4[i3],
-                                                                gcs4[i4],
-                                                                gcs5[i5],
-                                                                gcs5[i6],
-                                                                gcs5[i7],
-                                                            ])
-                                                            s = s.replace(gcs5[i7], '')
-                                                    s = s.replace(gcs5[i6], '')
-                                            s = s.replace(gcs5[i5], '')
-                                    s = s.replace(gcs4[i4], '')
-                            s = s.replace(gcs4[i3], '')
-                    s = s.replace(gcs4[i2], '')
+
+    for i1 in range(l4):
+        s = gcs4[i1]
+        for i2 in range(i1, l4):
+            if all(c not in s for c in gcs4[i2]):
+                s += gcs4[i2]
+                for i3 in range(i2, l4):
+                    if all(c not in s for c in gcs4[i3]):
+                        s += gcs4[i3]
+                        for i4 in range(i3, l4):
+                            if all(c not in s for c in gcs4[i4]):
+                                s += gcs4[i4]
+                                for i5 in range(l5):
+                                    if all(c not in s for c in gcs5[i5]):
+                                        s += gcs5[i5]
+                                        for i6 in range(i5, l5):
+                                            if all(c not in s for c in gcs5[i6]):
+                                                s += gcs5[i6]
+                                                for i7 in range(i6, l5):
+                                                    if all(c not in s for c in gcs5[i7]):
+                                                        s += gcs5[i7]
+                                                        combinations.append([
+                                                            gcs4[i1],
+                                                            gcs4[i2],
+                                                            gcs4[i3],
+                                                            gcs4[i4],
+                                                            gcs5[i5],
+                                                            gcs5[i6],
+                                                            gcs5[i7],
+                                                        ])
+                                                        s = s.replace(gcs5[i7], '')
+                                                s = s.replace(gcs5[i6], '')
+                                        s = s.replace(gcs5[i5], '')
+                                s = s.replace(gcs4[i4], '')
+                        s = s.replace(gcs4[i3], '')
+                s = s.replace(gcs4[i2], '')
+
+        progress = int((i1 + 1) / l4 * 100)
+        print(f'Progress: {progress}%', file=output)
 
     print(f'{len(combinations)} combinations found', file=output)
-    for combo in combinations:
-        print(', '.join(f'GC{x}' for x in combo), file=output)
 
     if write_routes and base_tree is not None:
-        os.makedirs(output_dir, exist_ok=True)
         for i, combo in enumerate(combinations):
             route_tree = copy.deepcopy(base_tree)
             root = route_tree.getroot()
