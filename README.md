@@ -11,19 +11,16 @@ python3 gs.py geocaching.loc
 python3 gs.py file1.loc file2.gpx --no-route-files
 ```
 
-- Input files are passed as arguments (no hardcoded `queries` list anymore).
+- Input files are passed as arguments.
 - By default, route files `Schmiederoute*.loc` are written when combinations are found.
 - Use `--no-route-files` to only print terminal output.
-- After the `x combinations found` line, each combination is printed on its own line as comma-separated `GC...` codes.
 
 ## GitHub Pages web UI
 
-A simple static website is included (`index.html`, `web.js`, `styles.css`) so non-coders can use the tool in a browser:
+A simple static website is included under https://pattux.github.io/GC5C2AE-Finder/.
 
-1. Enable **GitHub Pages** in your repository settings (deploy from the root on `main`, or use Actions).
-2. Open the published site.
-3. Upload one or more `.loc` / `.gpx` files.
-4. Click **Run Finder**.
-5. Read the output and click **Download .loc ZIP** to download generated route files.
+1. Upload one or more `.loc` / `.gpx` files.
+2. Click **Run Finder**.
+3. Read the output and click **Download .loc ZIP** to download generated route files.
 
-The page uses Pyodide and JSZip client-side, so no server is needed.
+The page uses Pyodide and JSZip client-side, so no installatoin is needed.
