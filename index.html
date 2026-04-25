@@ -11,12 +11,16 @@
   <body>
     <main class="container">
       <h1>GC5C2AE Finder</h1>
-      <p>Upload one or more <code>.loc</code> / <code>.gpx</code> files to process them without coding.</p>
+      <p>Upload one or more .loc / .gpx files</p>
 
       <label class="upload">
         <span>Select files</span>
         <input id="fileInput" type="file" accept=".loc,.gpx" multiple />
       </label>
+
+      <div id="progressWrapper" class="progress" hidden>
+        <div id="progressBar" class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"></div>
+      </div>
 
       <div class="actions">
         <button id="runButton">Run Finder</button>
